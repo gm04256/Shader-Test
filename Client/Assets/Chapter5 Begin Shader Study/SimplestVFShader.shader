@@ -1,4 +1,6 @@
-﻿Shader "Custom/SimplestVFShader" 
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/SimplestVFShader" 
 {
 	SubShader 
 	{
@@ -11,7 +13,7 @@
 
 			float4 vert(float4 v: POSITION): SV_POSITION
 			{
-				float4 position = mul(UNITY_MATRIX_MVP, v);
+				float4 position = UnityObjectToClipPos(v);
 				return position;
 			}
 
