@@ -280,46 +280,82 @@ public class ParticleSetInspector_test : MaterialEditor
 			{
 				newKeyWords.Add(keyUseUVScroll);
 			}
+            else
+            {
+                newKeyWords.Remove(keyUseUVScroll);
+            }
 
 			if (useMask)
 			{
 				newKeyWords.Add(keyUseMask);
 			}
+            else
+            {
+                newKeyWords.Remove(keyUseMask);
+            }
 
 			if (usePMAP)
 			{
-				newKeyWords.Add(keyUsePMAP);
-			}
+                newKeyWords.Add(keyUsePMAP);
+            }
+            else
+            {
+                newKeyWords.Remove(keyUsePMAP);
+            }
 
 			if (useAlphablack)
 			{
 				newKeyWords.Add(keyUseAlphablack);
 			}
+            else
+            {
+                newKeyWords.Remove(keyUseAlphablack);
+            }
 
 			if (useSubtraction)
 			{
 				newKeyWords.Add(keyUseSubtraction);
 			}
+            else
+            {
+                newKeyWords.Remove(keyUseSubtraction);
+            }
 
-			if (useMultiply)
-			{
-				newKeyWords.Add(keyUseMultiply);
-			}
+            if (useMultiply)
+            {
+                newKeyWords.Add(keyUseMultiply);
+            }
+            else
+            {
+                newKeyWords.Remove(keyUseMultiply);
+            }
 
 			if (useAdd)
 			{
 				newKeyWords.Add(keyUseAdd);
 			}
+            else
+            {
+                newKeyWords.Remove(keyUseAdd);
+            }
 
 			if (useOpaque)
 			{
 				newKeyWords.Add(keyUseOpaque);
 			}
+            else
+            {
+                newKeyWords.Remove(keyUseOpaque);
+            }
 
 			if (useAlpha)
 			{
 				newKeyWords.Add(keyUseAlpha);
 			}
+            else
+            {
+                newKeyWords.Remove(keyUseAlpha);
+            }
 
 
 
