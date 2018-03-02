@@ -48,7 +48,7 @@ Shader "Custom/VertexSpecularShader"
 				output.position = UnityObjectToClipPos(input.vertex);
 
 				// world light direction
-				float3 worldLightDirection = WorldSpaceLightDir(input.vertex);
+				float3 worldLightDirection = _WorldSpaceLightPos0;
 
 				// world normal direction
 				float3 worldNormalDirection = mul(transpose((float3x3)unity_WorldToObject), input.normal);

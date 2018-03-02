@@ -50,7 +50,7 @@ Shader "Custom/FragmentSpecularShader"
 				output.position = UnityObjectToClipPos(input.vertex);
 
 				// world light direction
-				output.worldLightDirection = WorldSpaceLightDir(input.vertex);
+				output.worldLightDirection = _WorldSpaceLightPos0;
 
 				// world normal direction
 				output.worldNormalDirection = mul(transpose((float3x3)unity_WorldToObject), input.normal);
