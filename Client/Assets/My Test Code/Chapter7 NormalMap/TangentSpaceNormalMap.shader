@@ -67,8 +67,8 @@ Shader "Custom/TangentSpaceNormalMap"
 				float3 binormal = cross(input.normal, input.tangent.xyz) * input.tangent.w;
 				float3x3 modelToTangentMatrix = float3x3(input.tangent.xyz, binormal, input.normal);
 
-				output.tangentLightDir = mul(modelToTangentMatrix, ObjSpaceLightDir(input.vertex));
-				output.tangentViewDir = mul(modelToTangentMatrix, ObjSpaceViewDir(input.vertex));
+				output.tangentLightDir = mul(modelToTangentMatrix, normalize(ObjSpaceLightDir(input.vertex)));
+				output.tangentViewDir = mul(modelToTangentMatrix, normalize(ObjSpaceViewDir(input.vertex)));
 
 				return output;
 			}
@@ -80,20 +80,24 @@ Shader "Custom/TangentSpaceNormalMap"
 				float tangentViewDir = normalize(input.tangentViewDir);
 
 				// get tangent space normal
-				float3 tangentNormal = UnpackNormal(tex2D(_NormalTex, input.uv.zw));
+				float3 unpackedNormal = UnpackNormal(tex2D(_NormalTex, input.uv.zw));
+				float3 tangentNormal;
+				tangentNormal.xy = unpackedNormal.xy;
+				tangentNormal.z = sqrt(1 - saturate(dot(tangentNormal.xy, tangentNormal.xy)));
 
 				// calculate diffuse
-				float3 diffuse = _DiffuseColor.rgb * max(0, dot(tangentNormal, tangentViewDir));
+				float3 diffuse = _DiffuseColor.rgb * max(0, dot(tangentNormal, tangentLightDir));
 
 				// calculate specular
 				float3 tangentHalfDir = normalize(tangentViewDir + tangentLightDir);
 				float3 specular = _SpecularColor.rgb * pow(max(0, dot(tangentHalfDir, tangentNormal)), _Gloss);
 			
 				// get MainTex color
-				float4 mainTexColor = tex2D(_MainTex, input.uv.xy);
+				float3 mainTexColor = tex2D(_MainTex, input.uv.xy).xyz;
 
-				fixed4 color = fixed4(_LightColor0.rgb * (specular + diffuse + mainTexColor.xyz), 1);
+				fixed4 color = fixed4(_LightColor0.rgb * (specular + diffuse + mainTexColor), 1);
 
+				color = fixed4(specular, 1);
 				return color;
 			}
 

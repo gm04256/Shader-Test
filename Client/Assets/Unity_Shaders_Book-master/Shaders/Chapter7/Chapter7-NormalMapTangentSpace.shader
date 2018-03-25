@@ -112,16 +112,16 @@ Shader "Unity Shaders Book/Chapter 7/Normal Map In Tangent Space" {
 				/// 
 
 				// Compute the binormal
-//				float3 binormal = cross( normalize(v.normal), normalize(v.tangent.xyz) ) * v.tangent.w;
+				float3 binormal = cross( normalize(v.normal), normalize(v.tangent.xyz) ) * v.tangent.w;
 //				// Construct a matrix which transform vectors from object space to tangent space
-//				float3x3 rotation = float3x3(v.tangent.xyz, binormal, v.normal);
+				float3x3 rotation = float3x3(v.tangent.xyz, binormal, v.normal);
 				// Or just use the built-in macro
 //				TANGENT_SPACE_ROTATION;
 //				
 //				// Transform the light direction from object space to tangent space
-//				o.lightDir = mul(rotation, normalize(ObjSpaceLightDir(v.vertex))).xyz;
+				o.lightDir = mul(rotation, normalize(ObjSpaceLightDir(v.vertex))).xyz;
 //				// Transform the view direction from object space to tangent space
-//				o.viewDir = mul(rotation, normalize(ObjSpaceViewDir(v.vertex))).xyz;
+				o.viewDir = mul(rotation, normalize(ObjSpaceViewDir(v.vertex))).xyz;
 				
 				return o;
 			}
@@ -151,6 +151,7 @@ Shader "Unity Shaders Book/Chapter 7/Normal Map In Tangent Space" {
 				fixed3 halfDir = normalize(tangentLightDir + tangentViewDir);
 				fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(tangentNormal, halfDir)), _Gloss);
 				
+				return fixed4(specular, 1);
 				return fixed4(ambient + diffuse + specular, 1.0);
 			}
 			
