@@ -29,7 +29,7 @@ Shader "Custom/TangentSpaceNormalMap"
 				float4 vertex: POSITION;
 				float3 normal: NORMAL;
 				float4 tangent: TANGENT;
-				float4 texcoord: TEXCOORD;
+				float4 texcoord: TEXCOORD0;
 			};
 
 			struct v2f
@@ -82,7 +82,7 @@ Shader "Custom/TangentSpaceNormalMap"
 				// get tangent space normal
 				float3 unpackedNormal = UnpackNormal(tex2D(_NormalTex, input.uv.zw));
 				float3 tangentNormal;
-				tangentNormal.xy = unpackedNormal.xy;
+				tangentNormal.xy = unpackedNormal.xy * -0.8;
 				tangentNormal.z = sqrt(1 - saturate(dot(tangentNormal.xy, tangentNormal.xy)));
 
 				// calculate diffuse
@@ -97,7 +97,7 @@ Shader "Custom/TangentSpaceNormalMap"
 
 				fixed4 color = fixed4(_LightColor0.rgb * (specular + diffuse + mainTexColor), 1);
 
-				color = fixed4(specular, 1);
+				//color = fixed4(specular, 1);
 				return color;
 			}
 
